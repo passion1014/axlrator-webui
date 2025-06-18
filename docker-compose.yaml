@@ -10,36 +10,37 @@ services:
   #   restart: unless-stopped
   #   image: ollama/ollama:${OLLAMA_DOCKER_TAG-latest}
 
-  open-webui:
+  axlrator-webui:
     build:
       context: .
       args:
         OLLAMA_BASE_URL: '/ollama'
       dockerfile: Dockerfile
-    image: ghcr.io/open-webui/open-webui:${WEBUI_DOCKER_TAG-main}
-    container_name: open-webui
+    #image: ghcr.io/axlrator-webui/axlrator-webui:${WEBUI_DOCKER_TAG-main}
+    image: webui:latest
+    container_name: webui
     volumes:
-      - open-webui:/app/backend/data
-      - ./backend:/app/backend # 로컬 소스와 마운트
-      - ./frontend:/app/frontend # 로컬 소스와 마운트
+      - ../axlrator-webui:/app/axlrator-webui
     # depends_on:
     #   - ollama
     ports:
-      # - ${OPEN_WEBUI_PORT-3000}:8080
-      - ${OPEN_WEBUI_PORT-8080}:8080
+      - 8080:8080
+      - 4173:4173
+      - 5173:5173
     environment:
       # - 'OLLAMA_BASE_URL=http://ollama:11434'
       - 'OLLAMA_BASE_URL=http://host.docker.internal:11434'
       - 'WEBUI_SECRET_KEY='
+      - NO_AUTH=true
     extra_hosts:
       - host.docker.internal:host-gateway
     restart: unless-stopped
+    # command: tail -f /dev/null
+    command: ['/bin/bash', '/app/axlrator-webui/axlrator_start.sh']
 
 volumes:
   # ollama: {}
-  open-webui: {}
-
-
+  axlrator-webui: {}
 # 2024/02/20
 # - 올라마 컨테이너 삭제 + 로컬 url로 변경
 # - 로컬 디스크와 마운트

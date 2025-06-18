@@ -1,11 +1,16 @@
 #!/usr/bin/env bash
 
+# transformers을 offline에서 사용하기 위한 환경변수 설정
+export TRANSFORMERS_OFFLINE=1
+export HF_DATASETS_OFFLINE=1
+export SENTENCE_TRANSFORMERS_HOME=/root/.cache/huggingface/hub/
+
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 cd "$SCRIPT_DIR" || exit
 
 # Add conditional Playwright browser installation
-if [[ "${RAG_WEB_LOADER_ENGINE,,}" == "playwright" ]]; then
-    if [[ -z "${PLAYWRIGHT_WS_URI}" ]]; then
+if [[ "${WEB_LOADER_ENGINE,,}" == "playwright" ]]; then
+    if [[ -z "${PLAYWRIGHT_WS_URL}" ]]; then
         echo "Installing Playwright browsers..."
         playwright install chromium
         playwright install-deps chromium
@@ -65,4 +70,6 @@ if [ -n "$SPACE_ID" ]; then
   export WEBUI_URL=${SPACE_HOST}
 fi
 
-WEBUI_SECRET_KEY="$WEBUI_SECRET_KEY" exec uvicorn open_webui.main:app --host "$HOST" --port "$PORT" --forwarded-allow-ips '*'
+PYTHON_CMD=$(command -v python3 || command -v python)
+
+WEBUI_SECRET_KEY="$WEBUI_SECRET_KEY" exec "$PYTHON_CMD" -m uvicorn open_webui.main:app --host "$HOST" --port "$PORT" --forwarded-allow-ips '*' --workers "${UVICORN_WORKERS:-1}"
