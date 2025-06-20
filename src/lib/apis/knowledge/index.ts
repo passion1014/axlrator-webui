@@ -1,4 +1,5 @@
 import { WEBUI_API_BASE_URL } from '$lib/constants';
+import { globalSelectedModels } from '$lib/stores';
 
 export const createNewKnowledge = async (
 	token: string,
@@ -41,7 +42,28 @@ export const createNewKnowledge = async (
 export const getKnowledgeBases = async (token: string = '') => {
 	let error = null;
 
-	const res = await fetch(`${WEBUI_API_BASE_URL}/knowledge/`, {
+	let url: string | null = null;
+
+	//models 콘솔로 출력
+
+	// console.log('Active model:', model);
+
+	let modelId: string | null = null;
+	globalSelectedModels.subscribe((value) => {
+		console.log(value);
+		modelId = value?.[0] ?? null;
+	});
+
+	console.log(22222222222222222n);
+
+	if (modelId === 'AXL-Code') {
+		//url = `${WEBUI_API_BASE_URL}/codeKnowledge`;
+		url = `${WEBUI_API_BASE_URL}/knowledge/`;
+	} else {
+		url = `${WEBUI_API_BASE_URL}/knowledge/`;
+	}
+
+	const res = await fetch(url, {
 		method: 'GET',
 		headers: {
 			Accept: 'application/json',

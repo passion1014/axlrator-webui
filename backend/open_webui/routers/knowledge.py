@@ -3,6 +3,7 @@ from pydantic import BaseModel
 from fastapi import APIRouter, Depends, HTTPException, status, Request
 import logging
 
+# from backend.open_webui.models.chunked_data import ChunkedData
 from open_webui.models.knowledge import (
     Knowledges,
     KnowledgeForm,
@@ -758,3 +759,45 @@ def add_files_to_knowledge_batch(
         **knowledge.model_dump(),
         files=Files.get_file_metadatas_by_ids(existing_file_ids),
     )
+
+# @router.get("/codeknowledge", response_model=list[KnowledgeUserResponse])
+# async def get_knowledge(user=Depends(get_verified_user)):
+#     knowledge_bases = ChunkedData.get_chunked_data()
+
+#     # Get files for each knowledge base
+#     knowledge_with_files = []
+#     for knowledge_base in knowledge_bases:
+#         files = []
+#         if knowledge_base.data:
+#             files = Files.get_file_metadatas_by_ids(
+#                 knowledge_base.data.get("file_ids", [])
+#             )
+
+#             # Check if all files exist
+#             if len(files) != len(knowledge_base.data.get("file_ids", [])):
+#                 missing_files = list(
+#                     set(knowledge_base.data.get("file_ids", []))
+#                     - set([file.id for file in files])
+#                 )
+#                 if missing_files:
+#                     data = knowledge_base.data or {}
+#                     file_ids = data.get("file_ids", [])
+
+#                     for missing_file in missing_files:
+#                         file_ids.remove(missing_file)
+
+#                     data["file_ids"] = file_ids
+#                     Knowledges.update_knowledge_data_by_id(
+#                         id=knowledge_base.id, data=data
+#                     )
+
+#                     files = Files.get_file_metadatas_by_ids(file_ids)
+
+#         knowledge_with_files.append(
+#             KnowledgeUserResponse(
+#                 **knowledge_base.model_dump(),
+#                 files=files,
+#             )
+#         )
+
+#     return knowledge_with_files

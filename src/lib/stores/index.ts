@@ -81,6 +81,9 @@ export const currentChatPage = writable(1);
 export const isLastActiveTab = writable(true);
 export const playingNotificationSound = writable(false);
 
+//20250620 김정민 추가
+export const globalSelectedModels: Writable<string[] | null> = writable(null);
+
 export type Model = OpenAIModel | OllamaModel | AifredModel;
 
 type BaseModel = {

@@ -1,5 +1,13 @@
 <script lang="ts">
-	import { models, showSettings, settings, user, mobile, config } from '$lib/stores';
+	import {
+		models,
+		showSettings,
+		settings,
+		user,
+		mobile,
+		config,
+		globalSelectedModels
+	} from '$lib/stores';
 	import { onMount, tick, getContext } from 'svelte';
 	import { toast } from 'svelte-sonner';
 	import Selector from './ModelSelector/Selector.svelte';
@@ -26,9 +34,12 @@
 	};
 
 	$: if (selectedModels.length > 0 && $models.length > 0) {
+		console.log('selectedModels', selectedModels);
 		selectedModels = selectedModels.map((model) =>
 			$models.map((m) => m.id).includes(model) ? model : ''
 		);
+
+		globalSelectedModels.set(selectedModels);
 	}
 </script>
 
