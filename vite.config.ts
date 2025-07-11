@@ -19,20 +19,20 @@ export default defineConfig({
 	],
 	server: {
 		watch: {
-		  ignored: ['**/venv/**', '**/site-packages/**']
+			ignored: ['**/venv/**', '**/site-packages/**']
 		},
 		host: '0.0.0.0',
 		port: 5173,
-		allowedHosts: ['codeassist.axlrator.com', 'axlrator.com', 'www.axlrator.com'],
+		allowedHosts: ['codeassist.axlrator.com', 'axlrator.com', 'www.axlrator.com', 'localhost'],
 		hmr: {
-			protocol: 'wss',
-			host: 'axlrator.com'
+			protocol: 'ws',
+			host: 'localhost'
 		}
-	},	
+	},
 	preview: {
 		host: '0.0.0.0',
 		port: 4173,
-		allowedHosts: ['axlrator.com', 'www.axlrator.com']
+		allowedHosts: ['axlrator.com', 'www.axlrator.com', 'localhost']
 	},
 	define: {
 		APP_VERSION: JSON.stringify(process.env.npm_package_version),
@@ -43,8 +43,5 @@ export default defineConfig({
 	},
 	worker: {
 		format: 'es'
-	},
-	esbuild: {
-		pure: ['console.log', 'console.debug']
 	}
 });
