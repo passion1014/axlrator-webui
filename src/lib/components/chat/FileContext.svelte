@@ -1,4 +1,3 @@
-<!-- AXL:김정민 파일 컨텍스트 20250704 -->
 <script lang="ts">
 	import { onMount, tick, getContext, createEventDispatcher, onDestroy } from 'svelte';
 	import Tooltip from '../common/Tooltip.svelte';
