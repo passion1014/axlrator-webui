@@ -49,7 +49,6 @@
 
 	import { beforeNavigate } from '$app/navigation';
 	import { updated } from '$app/state';
-	import { debug } from 'yaml/util';
 
 	// handle frontend updates (https://svelte.dev/docs/kit/configuration#version)
 	beforeNavigate(({ willUnload, to }) => {
@@ -552,7 +551,6 @@
 					} else {
 						// Redirect Invalid Session User to /auth Page
 						localStorage.removeItem('token');
-						debugger;
 						await goto('/auth');
 					}
 				} else {
