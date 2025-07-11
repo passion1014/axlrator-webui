@@ -12,7 +12,7 @@
 		context: string;
 	}[] = [];
 
-	$: console.log('files:', contextFiles);
+	$: console.log('FileContext > : contextFiles', contextFiles);
 </script>
 
 {#each contextFiles as file}

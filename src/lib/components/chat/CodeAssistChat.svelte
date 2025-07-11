@@ -147,6 +147,8 @@
 		context: string;
 	}[] = [];
 
+	$: console.log('CodeAssistChat > contextFiles:', contextFiles);
+
 	$: if (chatIdProp) {
 		(async () => {
 			loading = true;
@@ -359,6 +361,7 @@
 					}
 				} else if (type === 'confirmation') {
 					eventCallback = cb;
+					
 
 					eventConfirmationInput = false;
 					showEventConfirmation = true;
@@ -794,6 +797,7 @@
 
 		chatFiles = [];
 		params = {};
+		debugger;
 		contextFiles = []; //AXL:김정민: 파일 컨텍스트 초기화 20250704
 
 		if ($page.url.searchParams.get('youtube')) {

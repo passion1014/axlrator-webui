@@ -484,9 +484,9 @@
 		dropzoneElement?.addEventListener('drop', onDrop);
 		dropzoneElement?.addEventListener('dragleave', onDragLeave);
 
-		const nativeMessageHandler = (event) => {
+		const nativeMessageHandler = (event) => {			
 			contextFiles = [...contextFiles, event.detail.data];
-			// console.log('contextFiles:', contextFiles);
+			console.log('MessageInput > contextFiles:', contextFiles);
 		};
 
 		window.addEventListener('native-message', nativeMessageHandler);
