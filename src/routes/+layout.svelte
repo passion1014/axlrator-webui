@@ -49,6 +49,7 @@
 
 	import { beforeNavigate } from '$app/navigation';
 	import { updated } from '$app/state';
+	import { debug } from 'yaml/util';
 
 	// handle frontend updates (https://svelte.dev/docs/kit/configuration#version)
 	beforeNavigate(({ willUnload, to }) => {
@@ -551,13 +552,16 @@
 					} else {
 						// Redirect Invalid Session User to /auth Page
 						localStorage.removeItem('token');
+						debugger;
 						await goto('/auth');
 					}
 				} else {
 					// Don't redirect if we're already on the auth page
 					// Needed because we pass in tokens from OAuth logins via URL fragments
 					if ($page.url.pathname !== '/auth') {
-						await goto('/auth');
+						//AXL:김정민 - 20250711 redirect에 현재 uri를 추가
+						//await goto('/auth');
+						await goto(`/auth?redirect=${encodeURIComponent($page.url.pathname)}`);
 					}
 				}
 			}
