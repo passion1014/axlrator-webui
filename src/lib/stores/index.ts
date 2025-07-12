@@ -84,6 +84,14 @@ export const currentChatPage = writable(1);
 export const isLastActiveTab = writable(true);
 export const playingNotificationSound = writable(false);
 
+export const contextFiles: Writable<ContextFile[]> = writable([]);
+type ContextFile = {
+		fileName: string;
+		startLine: number;
+		endLine: number;
+		context: string;
+	};
+
 export type Model = OpenAIModel | OllamaModel | AifredModel;
 
 type BaseModel = {

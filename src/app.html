@@ -105,7 +105,7 @@
 		<script>
 			//AXL:김정민 네이티브 메시지 핸들러추가
 			window.handleNativeMessage = function (msg) {
-				//console.log('Received native message:', msg);
+				console.log('app.html::Received native message:', msg);
 				const event = new CustomEvent('native-message', {
 					detail: msg
 				});

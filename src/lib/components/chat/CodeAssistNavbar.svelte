@@ -11,7 +11,6 @@
 		settings,
 		showArchivedChats,
 		showControls,
-		showSidebar,
 		temporaryChatEnabled,
 		user
 	} from '$lib/stores';
@@ -64,11 +63,7 @@
 
 		<div class=" flex max-w-full w-full mx-auto px-1 pt-0.5 bg-transparent">
 			<div class="flex items-center w-full max-w-full">
-				<div
-					class="{$showSidebar
-						? 'md:hidden'
-						: ''} mr-1 self-start flex flex-none items-center text-gray-600 dark:text-gray-400"
-				>
+				<div class="mr-1 self-start flex flex-none items-center text-gray-600 dark:text-gray-400">
 					<!---AXL:김정민 - 20250711 사이드바 주석처리-->
 					<!-- <button
 						id="sidebar-toggle-button"
@@ -83,30 +78,22 @@
 						</div>
 					</button> -->
 
-					{#if !$mobile}
-						<Tooltip content={$i18n.t('New Chat')}>
-							<button
-								class=" flex {$showSidebar
-									? 'md:hidden'
-									: ''} cursor-pointer px-2 py-2 rounded-xl text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-850 transition"
-								on:click={() => {
-									initNewChat();
-								}}
-								aria-label="New Chat"
-							>
-								<div class=" m-auto self-center">
-									<PencilSquare className=" size-5" strokeWidth="2" />
-								</div>
-							</button>
-						</Tooltip>
-					{/if}
+					<Tooltip content={$i18n.t('New Chat')}>
+						<button
+							class=" flex cursor-pointer px-2 py-2 rounded-xl text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-850 transition"
+							on:click={() => {
+								initNewChat();
+							}}
+							aria-label="New Chat"
+						>
+							<div class=" m-auto self-center">
+								<PencilSquare className=" size-5" strokeWidth="2" />
+							</div>
+						</button>
+					</Tooltip>
 				</div>
 
-				<div
-					class="flex-1 overflow-hidden max-w-full py-0.5
-			{$showSidebar ? 'ml-1' : ''}
-			"
-				>
+				<div class="flex-1 overflow-hidden max-w-full py-0.5">
 					{#if showModelSelector}
 						<ModelSelector bind:selectedModels showSetDefault={!shareEnabled} />
 					{/if}

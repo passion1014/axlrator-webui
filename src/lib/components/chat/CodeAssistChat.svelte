@@ -90,6 +90,8 @@
 	import NotificationToast from '../NotificationToast.svelte';
 	import Spinner from '../common/Spinner.svelte';
 	import { fade } from 'svelte/transition';
+	import { contextFiles } from '$lib/stores';
+
 	export let chatIdProp = '';
 
 	let loading = true;
@@ -139,13 +141,6 @@
 	let chatFiles = [];
 	let files = [];
 	let params = {};
-	//AXL:김정민: 파일 컨텍스트 추가 20250704
-	export let contextFiles: {
-		fileName: string;
-		startLine: number;
-		endLine: number;
-		context: string;
-	}[] = [];
 
 	$: if (chatIdProp) {
 		(async () => {
@@ -359,6 +354,7 @@
 					}
 				} else if (type === 'confirmation') {
 					eventCallback = cb;
+					
 
 					eventConfirmationInput = false;
 					showEventConfirmation = true;
@@ -794,7 +790,7 @@
 
 		chatFiles = [];
 		params = {};
-		contextFiles = []; //AXL:김정민: 파일 컨텍스트 초기화 20250704
+		contextFiles.set([]); //AXL:김정민: 파일 컨텍스트 초기화 20250704
 
 		if ($page.url.searchParams.get('youtube')) {
 			uploadYoutubeTranscription(
@@ -1728,7 +1724,7 @@
 							}
 						}
 					: {}),
-				file_contexts: contextFiles.map((file) => ({
+				file_contexts: $contextFiles.map((file) => ({
 					//AXL:김정민 20250707 추가
 					file_name: file.fileName,
 					context: file.context
@@ -2125,7 +2121,6 @@
 									bind:codeInterpreterEnabled
 									bind:webSearchEnabled
 									bind:atSelectedModel
-									bind:contextFiles
 									toolServers={$toolServers}
 									transparentBackground={$settings?.backgroundImageUrl ?? false}
 									{stopResponse}

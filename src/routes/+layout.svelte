@@ -557,7 +557,9 @@
 					// Don't redirect if we're already on the auth page
 					// Needed because we pass in tokens from OAuth logins via URL fragments
 					if ($page.url.pathname !== '/auth') {
-						await goto('/auth');
+						//AXL:김정민 - 20250711 redirect에 현재 uri를 추가
+						//await goto('/auth');
+						await goto(`/auth?redirect=${encodeURIComponent($page.url.pathname)}`);
 					}
 				}
 			}
