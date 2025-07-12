@@ -58,6 +58,7 @@
 	import Sparkles from '../icons/Sparkles.svelte';
 
 	import { KokoroWorker } from '$lib/workers/KokoroWorker';
+	import { contextFiles } from '$lib/stores';
 
 	const i18n = getContext('i18n');
 
@@ -89,14 +90,6 @@
 	export let imageGenerationEnabled = false;
 	export let webSearchEnabled = false;
 	export let codeInterpreterEnabled = false;
-
-	//AXL:김정민: 파일 컨텍스트 추가 20250704
-	export let contextFiles: {
-		fileName: string;
-		startLine: number;
-		endLine: number;
-		context: string;
-	}[] = [];
 
 	$: onChange({
 		prompt,
@@ -462,6 +455,13 @@
 		shiftKey = false;
 	};
 
+	const nativeMessageHandler = (event) => {		
+		console.log('MessageInput::Native message received:', event.detail);
+		contextFiles.update((files) => {
+			return [...files, event.detail.data]
+		});
+	};
+
 	onMount(async () => {
 		loaded = true;
 
@@ -483,17 +483,9 @@
 		dropzoneElement?.addEventListener('dragover', onDragOver);
 		dropzoneElement?.addEventListener('drop', onDrop);
 		dropzoneElement?.addEventListener('dragleave', onDragLeave);
-
-		const nativeMessageHandler = (event) => {			
-			contextFiles = [...contextFiles, event.detail.data];
-			console.log('MessageInput > contextFiles:', contextFiles);
-		};
-
-		window.addEventListener('native-message', nativeMessageHandler);
-
-		return () => {
-			window.removeEventListener('native-message', nativeMessageHandler);
-		};
+	
+		window.addEventListener('native-message', nativeMessageHandler) ;
+	
 	});
 
 	onDestroy(() => {
@@ -511,6 +503,9 @@
 			dropzoneElement?.removeEventListener('drop', onDrop);
 			dropzoneElement?.removeEventListener('dragleave', onDragLeave);
 		}
+
+		window.removeEventListener('native-message', nativeMessageHandler);
+		console.log('MessageInput::removeEventListener().');
 	});
 </script>
 
@@ -1397,7 +1392,7 @@
 												{/if}
 
 												<!-- AXL:김정민: 파일 컨텍스트 추가 20250704 -->
-												<FileContext bind:contextFiles />
+												<FileContext/>
 
 												<!-- AXL:김정민 코드 인터프리터 미사용{#if showCodeInterpreterButton}
 													<Tooltip content={$i18n.t('Execute code for analysis')} placement="top">

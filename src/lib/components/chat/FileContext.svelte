@@ -2,20 +2,13 @@
 	import { onMount, tick, getContext, createEventDispatcher, onDestroy } from 'svelte';
 	import Tooltip from '../common/Tooltip.svelte';
 	import CommandLine from '../icons/CommandLine.svelte';
+	import { contextFiles } from '$lib/stores';
 
 	const i18n = getContext('i18n');
 
-	export let contextFiles: {
-		fileName: string;
-		startLine: number;
-		endLine: number;
-		context: string;
-	}[] = [];
-
-	$: console.log('FileContext > : contextFiles', contextFiles);
 </script>
 
-{#each contextFiles as file}
+{#each $contextFiles as file}
 	<Tooltip
 		content={`${file.fileName}${file.startLine !== undefined ? `[${file.startLine}-${file.endLine}]` : ''}`}
 		placement="top"
@@ -33,7 +26,7 @@
 			type="button"
 			class="text-red-500 hover:text-red-700 focus:outline-none"
 			aria-label="Delete"
-			on:click={() => (contextFiles = contextFiles.filter((f) => f !== file))}
+			on:click={() => (contextFiles.update(files => files.filter(f => f !== file)))}
 		>
 			&times;
 		</button>

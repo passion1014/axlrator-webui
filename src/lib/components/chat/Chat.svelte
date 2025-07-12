@@ -142,14 +142,6 @@
 	let files = [];
 	let params = {};
 
-	//AXL:김정민: 파일 컨텍스트 추가 20250704
-	export let contextFiles: {
-		fileName: string;
-		startLine: number;
-		endLine: number;
-		context: string;
-	}[] = [];
-
 	$: if (chatIdProp) {
 		(async () => {
 			loading = true;
@@ -797,7 +789,6 @@
 
 		chatFiles = [];
 		params = {};
-		contextFiles = []; //AXL:김정민: 파일 컨텍스트 초기화 20250704
 
 		if ($page.url.searchParams.get('youtube')) {
 			uploadYoutubeTranscription(
@@ -1730,12 +1721,7 @@
 								include_usage: true
 							}
 						}
-					: {}),
-				file_contexts: contextFiles.map((file) => ({
-					//AXL:김정민 20250707 추가
-					file_name: file.fileName,
-					context: file.context
-				}))
+					: {})
 			},
 			`${WEBUI_BASE_URL}/api`
 		).catch(async (error) => {
@@ -1973,7 +1959,6 @@
 				messages: createMessagesList(history, history.currentId),
 				tags: [],
 				timestamp: Date.now(),
-				contextFiles: contextFiles //AXL:김정민 20250707 추가
 			});
 
 			_chatId = chat.id;
@@ -2128,7 +2113,6 @@
 									bind:codeInterpreterEnabled
 									bind:webSearchEnabled
 									bind:atSelectedModel
-									bind:contextFiles
 									toolServers={$toolServers}
 									transparentBackground={$settings?.backgroundImageUrl ?? false}
 									{stopResponse}
