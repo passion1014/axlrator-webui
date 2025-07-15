@@ -107,7 +107,7 @@
 			</button>
 
 			{#if role === 'admin'}
-				<button
+				<!-- <button AXL:김정민 주석처리 20250707
 					class="flex rounded-md py-1.5 px-3 w-full hover:bg-gray-50 dark:hover:bg-gray-800 transition"
 					on:click={() => {
 						goto('/playground');
@@ -122,7 +122,7 @@
 						<Code className="size-5" strokeWidth="1.5" />
 					</div>
 					<div class=" self-center truncate">{$i18n.t('Playground')}</div>
-				</button>
+				</button> -->
 
 				<button
 					class="flex rounded-md py-1.5 px-3 w-full hover:bg-gray-50 dark:hover:bg-gray-800 transition"

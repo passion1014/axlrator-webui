@@ -1419,7 +1419,7 @@
 	"Youtube": "유튜브",
 	"Youtube Language": "Youtube 언어",
 	"Youtube Proxy URL": "Youtube 프록시 URL",
-	
+
 	"Check": "선택",
 	"Resource Name": "리소스 명",
 	"Resource Type": "리소스 타입",
@@ -1431,5 +1431,4 @@
 	"Process Type": "처리 유형",
 	"Complete Result": "처리 결과",
 	"Execute Statuis": "실행 상태"
-
 }

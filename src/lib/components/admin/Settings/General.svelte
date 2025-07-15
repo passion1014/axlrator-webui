@@ -90,7 +90,8 @@
 	};
 
 	onMount(async () => {
-		checkForVersionUpdates();
+		// AXL:김정민 주석처리 20250715
+		//checkForVersionUpdates();
 
 		await Promise.all([
 			(async () => {
@@ -137,7 +138,9 @@
 										v{WEBUI_VERSION}
 									</Tooltip>
 
+									<!-- AXL:김정민 hidden 처리 20250715 -->
 									<a
+										style="display: none;"
 										href="https://github.com/open-webui/open-webui/releases/tag/v{version.latest}"
 										target="_blank"
 									>
@@ -149,8 +152,9 @@
 									</a>
 								</div>
 
+								<!-- AXL:김정민 hidden 처리 20250715 -->
 								<button
-									class=" underline flex items-center space-x-1 text-xs text-gray-500 dark:text-gray-500"
+									class=" underline flex items-center space-x-1 text-xs text-gray-500 dark:text-gray-500 hidden"
 									type="button"
 									on:click={() => {
 										showChangelog.set(true);
@@ -160,8 +164,9 @@
 								</button>
 							</div>
 
+							<!-- AXL:김정민 hidden 처리 20250715 -->
 							<button
-								class=" text-xs px-3 py-1.5 bg-gray-50 hover:bg-gray-100 dark:bg-gray-850 dark:hover:bg-gray-800 transition rounded-lg font-medium"
+								class=" text-xs px-3 py-1.5 bg-gray-50 hover:bg-gray-100 dark:bg-gray-850 dark:hover:bg-gray-800 transition rounded-lg font-medium hidden"
 								type="button"
 								on:click={() => {
 									checkForVersionUpdates();
@@ -183,8 +188,9 @@
 								</div>
 							</div>
 
+							<!-- AXL:김정민 hidden 처리 20250715 -->
 							<a
-								class="flex-shrink-0 text-xs font-medium underline"
+								class="flex-shrink-0 text-xs font-medium underline hidden"
 								href="https://docs.openwebui.com/"
 								target="_blank"
 							>
@@ -218,7 +224,8 @@
 						</div>
 					</div>
 
-					<div class="mb-2.5">
+					<!-- AXL:김정민 hidden 처리 20250715 -->
+					<div class="mb-2.5 hidden">
 						<div class="flex w-full justify-between items-center">
 							<div class="text-xs pr-2">
 								<div class="">
@@ -615,7 +622,8 @@
 
 					<hr class=" border-gray-100 dark:border-gray-850 my-2" />
 
-					<div class="mb-2.5 flex w-full items-center justify-between pr-2">
+					<!-- AXL:김정민 hidden 처리 20250715 -->
+					<div class="mb-2.5 flex w-full items-center justify-between pr-2 hidden">
 						<div class=" self-center text-xs font-medium">
 							{$i18n.t('Enable Community Sharing')}
 						</div>
