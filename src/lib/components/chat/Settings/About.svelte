@@ -121,7 +121,8 @@
 				<span class=" capitalize">{$config?.license_metadata?.organization_name}</span>
 			</div>
 		{:else}
-			<div class="flex space-x-1">
+			<!-- AXL:김정민 hidden 처리 20250715 -->
+			<div class="flex space-x-1 hidden">
 				<a href="https://discord.gg/5rJgQTnV4s" target="_blank">
 					<img
 						alt="Discord"

@@ -177,7 +177,8 @@
 						</div>
 					</div>
 
-					<div class="mb-2.5">
+					<!-- AXL:김정민 hidden 처리 20250715 -->
+					<div class="mb-2.5 hidden">
 						<div class="flex w-full justify-between items-center">
 							<div class="text-xs pr-2">
 								<div class="">
@@ -198,7 +199,8 @@
 							</a>
 						</div>
 
-						<div class="mt-1">
+						<!-- AXL:김정민 hidden 처리 20250715 -->
+						<div class="mt-1 hidden">
 							<div class="flex space-x-1">
 								<a href="https://discord.gg/5rJgQTnV4s" target="_blank">
 									<img
