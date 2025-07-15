@@ -38,7 +38,8 @@
 			return '';
 		});
 
-		checkForVersionUpdates();
+		// AXL:김정민 주석처리 20250715
+		//checkForVersionUpdates();
 	});
 </script>
 
@@ -58,7 +59,9 @@
 							v{WEBUI_VERSION}
 						</Tooltip>
 
+						<!--AXL:김정민 hidden 처리 20250715-->
 						<a
+							style="display:none"
 							href="https://github.com/open-webui/open-webui/releases/tag/v{version.latest}"
 							target="_blank"
 						>
@@ -70,8 +73,9 @@
 						</a>
 					</div>
 
+					<!--AXL:김정민 hidden 처리 20250715-->
 					<button
-						class=" underline flex items-center space-x-1 text-xs text-gray-500 dark:text-gray-500"
+						class=" underline flex items-center space-x-1 text-xs text-gray-500 dark:text-gray-500 hidden"
 						on:click={() => {
 							showChangelog.set(true);
 						}}
@@ -80,8 +84,9 @@
 					</button>
 				</div>
 
+				<!--AXL:김정민 hidden 처리 20250715-->
 				<button
-					class=" text-xs px-3 py-1.5 bg-gray-100 hover:bg-gray-200 dark:bg-gray-850 dark:hover:bg-gray-800 transition rounded-lg font-medium"
+					class=" text-xs px-3 py-1.5 bg-gray-100 hover:bg-gray-200 dark:bg-gray-850 dark:hover:bg-gray-800 transition rounded-lg font-medium hidden"
 					on:click={() => {
 						checkForVersionUpdates();
 					}}
