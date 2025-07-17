@@ -452,7 +452,7 @@ async def getSources(request: Request, user=Depends(get_verified_user)):
         r = None
         try:
             r = requests.post(
-                url=f"{url}/v1/chat/completed",
+                url=f"{url}/chat/completed",
                 data=body,
                 headers={
                     "Content-Type": "application/json",
