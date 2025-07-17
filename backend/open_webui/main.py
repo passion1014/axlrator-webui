@@ -8,6 +8,7 @@ import shutil
 import sys
 import time
 import random
+from types import SimpleNamespace
 from uuid import uuid4
 
 
@@ -1436,7 +1437,88 @@ async def chat_completed(
             request.state.direct = True
             request.state.model = model_item
 
-        return await chat_completed_handler(request, form_data, user)
+        response = await chat_completed_handler(request, form_data, user)
+        
+        #======================================================
+        # axlr 모델 사용시 source(Citation) 추가 김정민 20250717
+        #======================================================        
+        if getattr(request.state, "direct", False) and hasattr(request.state, "model"):
+            models = {
+                request.state.model["id"]: request.state.model,
+            }
+            log.debug(f"direct connection to model: {models}")
+        else:
+            models = request.app.state.MODELS
+        model_id = form_data["model"]
+        if model_id not in models:
+            raise Exception("Model not found")    
+        model = models[model_id]
+        if model.get("owned_by") == "aifred":            
+            request.user_id = user.id if user else None
+                # id=form_data.get("id"),
+                # user_id=user.id if user else None,
+                # app=request.app           
+            sources = await aifred.getSources(request, user)
+    
+        return response
+    
+
+        # 테스트 하드코딩 데이터
+        # Uncomment the following lines if you want to assign specific content to form_data.messages[1]      
+        # Assign the specified content to form_data.messages[1]
+        # form_data["messages"][1]['sources'] = [
+        #     {
+        #         "source": {
+        #             "type": "file",
+        #             "file": {
+        #                 "id": "c2a99d9f-8dc4-44fa-b7c1-a7b8830b7543",
+        #                 "user_id": "1572da60-4459-40f6-8a81-c524312e3c67",
+        #                 "hash": "293048409a4425ec3706e088aa3d23b11bb72e5877690bbc09aa1f1e7ff1bc8c",
+        #                 "filename": "package-lock.json",
+        #                 "data": {
+        #                     "content": "{\n  \"name\": \"vscode\",\n  \"lockfileVersion\": 3,\n  \"requires\": true,\n  \"packages\": {}\n}\n"
+        #                 },
+        #                 "meta": {
+        #                     "name": "package-lock.json",
+        #                     "content_type": "application/json",
+        #                     "size": 85,
+        #                     "data": {},
+        #                     "collection_name": "file-c2a99d9f-8dc4-44fa-b7c1-a7b8830b7543"
+        #                 },
+        #                 "created_at": 1752654992,
+        #                 "updated_at": 1752654992
+        #             },
+        #             "id": "c2a99d9f-8dc4-44fa-b7c1-a7b8830b7543",
+        #             "url": "http://localhost:8080/api/v1/files/c2a99d9f-8dc4-44fa-b7c1-a7b8830b7543",
+        #             "name": "package-lock.json",
+        #             "collection_name": "file-c2a99d9f-8dc4-44fa-b7c1-a7b8830b7543",
+        #             "status": "uploaded",
+        #             "size": 85,
+        #             "error": "",
+        #             "itemId": "5af1ea5a-15e2-44fa-b5d2-e4bbff670b1e"
+        #         },
+        #         "document": [
+        #             "{\n  \"name\": \"vscode\",\n  \"lockfileVersion\": 3,\n  \"requires\": true,\n  \"packages\": {}\n}"
+        #         ],
+        #         "metadata": [
+        #             {
+        #                 "created_by": "1572da60-4459-40f6-8a81-c524312e3c67",
+        #                 "embedding_config": "{\"engine\": \"\", \"model\": \"sentence-transformers/all-MiniLM-L6-v2\"}",
+        #                 "file_id": "c2a99d9f-8dc4-44fa-b7c1-a7b8830b7543",
+        #                 "hash": "293048409a4425ec3706e088aa3d23b11bb72e5877690bbc09aa1f1e7ff1bc8c",
+        #                 "name": "package-lock.json",
+        #                 "source": "package-lock.json",
+        #                 "start_index": 0
+        #             }
+        #         ],
+        #         "distances": [
+        #             0.4836135008309149
+        #         ]
+        #     }
+        # ]
+
+        # response = await chat_completed_handler(request, form_data, user)
+        #return response
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
