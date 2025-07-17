@@ -8,7 +8,6 @@ import shutil
 import sys
 import time
 import random
-from types import SimpleNamespace
 from uuid import uuid4
 
 
