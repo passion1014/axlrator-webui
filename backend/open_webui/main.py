@@ -1437,7 +1437,7 @@ async def chat_completed(
             request.state.model = model_item
 
         response = await chat_completed_handler(request, form_data, user)
-        
+
         #======================================================
         # axlr 모델 사용시 source(Citation) 추가 김정민 20250717
         #======================================================        
@@ -1452,13 +1452,21 @@ async def chat_completed(
         if model_id not in models:
             raise Exception("Model not found")    
         model = models[model_id]
+
         if model.get("owned_by") == "aifred":            
             request.user_id = user.id if user else None
                 # id=form_data.get("id"),
                 # user_id=user.id if user else None,
-                # app=request.app           
+                # app=request.app
+            msg_id = form_data.get("id")
             sources = await aifred.getSources(request, user)
-    
+            messages = sources.get("history", {}).get("messages", {})
+
+            for resp_msg in response['messages']:
+                if resp_msg["id"] == msg_id:
+                    resp_msg["sources"] = messages.get(msg_id).get("sources", [])
+                    break
+
         return response
     
 
