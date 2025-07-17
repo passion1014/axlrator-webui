@@ -1436,7 +1436,11 @@ async def chat_completed(
             request.state.direct = True
             request.state.model = model_item
 
+        print(f"#####request={request}, form_data={form_data}, user={user}")
+
         response = await chat_completed_handler(request, form_data, user)
+        print(f"##### response={response}")
+
 
         #======================================================
         # axlr 모델 사용시 source(Citation) 추가 김정민 20250717
@@ -1460,6 +1464,9 @@ async def chat_completed(
                 # app=request.app
             msg_id = form_data.get("id")
             sources = await aifred.getSources(request, user)
+            
+            print(f"##### msg_id={msg_id}, sources={sources}")
+
             messages = sources.get("history", {}).get("messages", {})
 
             for resp_msg in response['messages']:
@@ -1467,6 +1474,7 @@ async def chat_completed(
                     resp_msg["sources"] = messages.get(msg_id).get("sources", [])
                     break
 
+        print(f"##### end response={response}")
         return response
     
 
