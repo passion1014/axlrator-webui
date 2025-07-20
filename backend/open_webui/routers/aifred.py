@@ -437,6 +437,75 @@ async def get_models(
 
     return models
 
+async def getSources(request: Request, user=Depends(get_verified_user)):
+    idx = 0
+    try:
+        # idx = request.app.state.config.AIFRED_API_BASE_URLS.index(
+        #     "https://api.openai.com/v1"
+        # )
+        # AXL:김정민: 오류나서 idx 0으로 고정
+
+        body = await request.body()
+                        
+        url = request.app.state.config.AIFRED_API_BASE_URLS[idx]
+
+        r = None
+        try:
+            r = requests.post(
+                url=f"{url}/chat/completed",
+                data=body,
+                headers={
+                    "Content-Type": "application/json",
+                    "Authorization": f"Bearer {request.app.state.config.AIFRED_API_KEYS[idx]}",
+                    **(
+                        {
+                            "HTTP-Referer": "https://axlrator.com/",
+                            "X-Title": "AXLRator",
+                        }
+                        if "openrouter.ai" in url
+                        else {}
+                    ),
+                    **(
+                        {
+                            "X-OpenWebUI-User-Name": user.name,
+                            "X-OpenWebUI-User-Id": user.id,
+                            "X-OpenWebUI-User-Email": user.email,
+                            "X-OpenWebUI-User-Role": user.role,
+                        }
+                        if ENABLE_FORWARD_USER_INFO_HEADERS
+                        else {}
+                    ),
+                },
+                stream=True,
+            )
+        
+            response = r.json()
+        except Exception as e:
+            log.error(e)
+            response = await r.text()
+            log.error(f"Error response: {response}")
+
+        r.raise_for_status()
+        return response
+    except Exception as e:
+        log.exception(e)
+
+        detail = None
+        if isinstance(response, dict):
+            if "error" in response:
+                detail = f"{response['error']['message'] if 'message' in response['error'] else response['error']}"
+        elif isinstance(response, str):
+            detail = response
+
+        raise HTTPException(
+            status_code=r.status if r else 500,
+            detail=detail if detail else "Open WebUI: Server Connection Error",
+        )
+    finally:        
+        if r:
+            r.close()
+        
+    
 
 class ConnectionVerificationForm(BaseModel):
     url: str
