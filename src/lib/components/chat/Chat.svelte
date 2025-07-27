@@ -125,6 +125,7 @@
 	let imageGenerationEnabled = false;
 	let webSearchEnabled = false;
 	let codeInterpreterEnabled = false;
+	let vectorDBSearchEnabled = false;
 
 	let chat = null;
 	let tags = [];
@@ -167,6 +168,7 @@
 						webSearchEnabled = input.webSearchEnabled;
 						imageGenerationEnabled = input.imageGenerationEnabled;
 						codeInterpreterEnabled = input.codeInterpreterEnabled;
+						vectorDBSearchEnabled = input.vectorDBSearchEnabled;
 					}
 				} catch (e) {}
 			}
@@ -215,6 +217,7 @@
 		webSearchEnabled = false;
 		imageGenerationEnabled = false;
 		codeInterpreterEnabled = false;
+		vectorDBSearchEnabled = false;
 	};
 
 	const setToolIds = async () => {
@@ -454,6 +457,7 @@
 			webSearchEnabled = false;
 			imageGenerationEnabled = false;
 			codeInterpreterEnabled = false;
+			vectorDBSearchEnabled = false;
 
 			try {
 				const input = JSON.parse(
@@ -468,6 +472,7 @@
 					webSearchEnabled = input.webSearchEnabled;
 					imageGenerationEnabled = input.imageGenerationEnabled;
 					codeInterpreterEnabled = input.codeInterpreterEnabled;
+					vectorDBSearchEnabled = input.vectorDBSearchEnabled;
 				}
 			} catch (e) {}
 		}
@@ -810,6 +815,9 @@
 
 		if ($page.url.searchParams.get('code-interpreter') === 'true') {
 			codeInterpreterEnabled = true;
+		}
+		if ($page.url.searchParams.get('vector-db-search') === 'true') {
+			vectorDBSearchEnabled = true;
 		}
 
 		if ($page.url.searchParams.get('tools')) {
@@ -1676,6 +1684,8 @@
 						($user?.role === 'admin' || $user?.permissions?.features?.code_interpreter)
 							? codeInterpreterEnabled
 							: false,
+					vector_db_search:
+						vectorDBSearchEnabled,
 					web_search:
 						$config?.features?.enable_web_search &&
 						($user?.role === 'admin' || $user?.permissions?.features?.web_search)
@@ -2111,6 +2121,7 @@
 									bind:selectedFilterIds
 									bind:imageGenerationEnabled
 									bind:codeInterpreterEnabled
+									bind:vectorDBSearchEnabled
 									bind:webSearchEnabled
 									bind:atSelectedModel
 									toolServers={$toolServers}
@@ -2170,6 +2181,7 @@
 									bind:selectedFilterIds
 									bind:imageGenerationEnabled
 									bind:codeInterpreterEnabled
+									bind:vectorDBSearchEnabled
 									bind:webSearchEnabled
 									bind:atSelectedModel
 									transparentBackground={$settings?.backgroundImageUrl ?? false}

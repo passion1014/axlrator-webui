@@ -38,6 +38,7 @@
 
 	export let imageGenerationEnabled = false;
 	export let codeInterpreterEnabled = false;
+	export let vectorDBSearchEnabled = false;
 	export let webSearchEnabled = false;
 
 	export let toolServers = [];
@@ -208,6 +209,7 @@
 					bind:selectedFilterIds
 					bind:imageGenerationEnabled
 					bind:codeInterpreterEnabled
+					bind:vectorDBSearchEnabled
 					bind:webSearchEnabled
 					bind:atSelectedModel
 					{toolServers}
