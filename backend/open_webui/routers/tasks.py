@@ -198,7 +198,7 @@ async def generate_title(
     # AXL: 김정민 20250709 
     # AXL-Code 모델은 별도의 쿼리 생성 템플릿을 사용하지 않고 Messages를 그대로 사용
     content = None
-    if model_id == "1234.AXLR-Code": 
+    if "AXLR" in model_id:
         content = form_data["messages"][0].get("content")
     else:
         template = None
@@ -302,7 +302,7 @@ async def generate_follow_ups(
     # AXL: 김정민 20250709 
     # AXL-Code 모델은 별도의 쿼리 생성 템플릿을 사용하지 않고 Messages를 그대로 사용
     content = None
-    if model_id == "1234.AXLR-Code": 
+    if "AXLR" in model_id:
         content = form_data["messages"][0].get("content")
     else:
         template = None
@@ -395,7 +395,7 @@ async def generate_chat_tags(
     # AXL: 김정민 20250709 
     # AXL-Code 모델은 별도의 쿼리 생성 템플릿을 사용하지 않고 Messages를 그대로 사용
     content = None
-    if model_id == "1234.AXLR-Code": 
+    if "AXLR" in model_id:
         content = form_data["messages"][0].get("content")
     else:
         template = None
@@ -563,7 +563,7 @@ async def generate_queries(
     # AXL: 김정민 20250709 
     # AXL-Code 모델은 별도의 쿼리 생성 템플릿을 사용하지 않고 Messages를 그대로 사용
     content = None
-    if model_id == "1234.AXLR-Code": 
+    if "AXLR" in model_id:
         last_user_message = get_last_user_message(form_data["messages"]) or {}
         content = last_user_message.get("content")
     else:

@@ -970,15 +970,15 @@ async def process_chat_payload(request, form_data, user, metadata, model):
         else:
             # AXL: 김정민 20250709 
             # AXL-Code 모델은 별도의 템플릿을 사용하지 않고 Messages를 그대로 사용
-            if model.get('id') == "1234.AXLR-Code": 
+            if "AXLR" in model.get('id', ''):
                 form_data["messages"] = add_or_update_system_message(prompt, form_data["messages"])
             else:
                 form_data["messages"] = add_or_update_system_message(
                     rag_template(
                         request.app.state.config.RAG_TEMPLATE, context_string, prompt
                     ),
-                form_data["messages"],
-            )
+                    form_data["messages"],
+                )
 
     form_data["chat_type"] = "02"  # 채팅형태 = 질문하기 AXL: 김정민 20250709  추가
                     

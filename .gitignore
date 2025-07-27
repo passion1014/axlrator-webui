@@ -308,3 +308,4 @@ cypress/videos
 cypress/screenshots
 .vscode/settings.json
 frontend/nohup.out
+static/pyodide/pyodide-lock.json
