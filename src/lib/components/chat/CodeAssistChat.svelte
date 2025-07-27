@@ -1687,7 +1687,7 @@
 						($user?.role === 'admin' || $user?.permissions?.features?.code_interpreter)
 							? codeInterpreterEnabled
 							: false,
-					vector_db_search:
+					is_vectordb:
 						vectorDBSearchEnabled,
 					web_search:
 						$config?.features?.enable_web_search &&
