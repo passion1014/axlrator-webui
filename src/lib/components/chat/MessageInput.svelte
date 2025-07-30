@@ -92,7 +92,6 @@
 	export let codeInterpreterEnabled = false;
 	export let vectorDBSearchEnabled = false;
 
-
 	$: onChange({
 		prompt,
 		files: files
@@ -109,7 +108,7 @@
 		imageGenerationEnabled,
 		webSearchEnabled,
 		codeInterpreterEnabled,
-		vectorDBSearchEnabled,
+		vectorDBSearchEnabled
 	});
 
 	let showTools = false;
@@ -458,10 +457,10 @@
 		shiftKey = false;
 	};
 
-	const nativeMessageHandler = (event) => {		
+	const nativeMessageHandler = (event) => {
 		console.log('MessageInput::Native message received:', event.detail);
 		contextFiles.update((files) => {
-			return [...files, event.detail.data]
+			return [...files, event.detail.data];
 		});
 	};
 
@@ -486,9 +485,8 @@
 		dropzoneElement?.addEventListener('dragover', onDragOver);
 		dropzoneElement?.addEventListener('drop', onDrop);
 		dropzoneElement?.addEventListener('dragleave', onDragLeave);
-	
-		window.addEventListener('native-message', nativeMessageHandler) ;
-	
+
+		window.addEventListener('native-message', nativeMessageHandler);
 	});
 
 	onDestroy(() => {
@@ -558,16 +556,14 @@
 							class="px-3 pb-0.5 pt-1.5 text-left w-full flex flex-col absolute bottom-0 left-0 right-0 bg-linear-to-t from-white dark:from-gray-900 z-10"
 						>
 							<div class="flex items-center justify-between w-full">
-								<div class="pl-[1px] flex items-center gap-2 text-sm dark:text-gray-500">									
+								<div class="pl-[1px] flex items-center gap-2 text-sm dark:text-gray-500">
 									<img
 										crossorigin="anonymous"
 										alt="model profile"
 										class="size-3.5 max-w-[28px] object-cover rounded-full"
 										src={$models.find((model) => model.id === atSelectedModel.id)?.info?.meta
 											?.profile_image_url ??
-											($i18n.language === 'dg-DG'
-												? `/doge.png`
-												: `/static/favicon.png`)}
+											($i18n.language === 'dg-DG' ? `/doge.png` : `/static/favicon.png`)}
 									/>
 									<div class="translate-y-[0.5px]">
 										Talking to <span class=" font-medium">{atSelectedModel.name}</span>
@@ -1397,35 +1393,40 @@
 												{/if}
 
 												<!-- AXL:김정민: 파일 컨텍스트 추가 20250704 -->
-												<FileContext/>
+												<FileContext />
 
 												<!-- AXL:김정민: VectorDB 검색 추가 20250727 -->
-												 <!-- Model이 AXLR-CODE일때만-->
-												  {#if selectedModelIds.includes('AXLR-Code')}
-												  
+												<!-- Model이 AXLR-CODE일때만-->
+												{#if selectedModelIds.includes('AXLR-Code')}
 													<Tooltip content={$i18n.t('VectorDB Search')} placement="top">
-															<button
-																on:click|preventDefault={() =>
-																	(vectorDBSearchEnabled = !vectorDBSearchEnabled)}
-																type="button"
-																class="px-2 @xl:px-2.5 py-2 flex gap-1.5 items-center text-sm rounded-full transition-colors duration-300 focus:outline-hidden max-w-full overflow-hidden hover:bg-gray-50 dark:hover:bg-gray-800 {vectorDBSearchEnabled
-																	? ' text-sky-500 dark:text-sky-300 bg-sky-50 dark:bg-sky-200/5'
-																	: 'bg-transparent text-gray-600 dark:text-gray-300 '}"
+														<button
+															on:click|preventDefault={() =>
+																(vectorDBSearchEnabled = !vectorDBSearchEnabled)}
+															type="button"
+															class="px-2 @xl:px-2.5 py-2 flex gap-1.5 items-center text-sm rounded-full transition-colors duration-300 focus:outline-hidden max-w-full overflow-hidden hover:bg-gray-50 dark:hover:bg-gray-800 {vectorDBSearchEnabled
+																? ' text-sky-500 dark:text-sky-300 bg-sky-50 dark:bg-sky-200/5'
+																: 'bg-transparent text-gray-600 dark:text-gray-300 '}"
+														>
+															<svg
+																xmlns="http://www.w3.org/2000/svg"
+																class="size-4"
+																fill="none"
+																viewBox="0 0 24 24"
+																stroke="currentColor"
+																stroke-width="1.75"
 															>
-																<svg xmlns="http://www.w3.org/2000/svg" class="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75">
-																	<ellipse cx="12" cy="6" rx="8" ry="3" />
-																	<path d="M4 6v6c0 1.657 3.582 3 8 3s8-1.343 8-3V6" />
-																	<path d="M4 12v6c0 1.657 3.582 3 8 3s8-1.343 8-3v-6" />
-																</svg>
-																<span
-																	class="hidden @xl:block whitespace-nowrap overflow-hidden text-ellipsis leading-none pr-0.5"
-																	>{$i18n.t('VectorDB Search')}</span
-																>
-															</button>
+																<ellipse cx="12" cy="6" rx="8" ry="3" />
+																<path d="M4 6v6c0 1.657 3.582 3 8 3s8-1.343 8-3V6" />
+																<path d="M4 12v6c0 1.657 3.582 3 8 3s8-1.343 8-3v-6" />
+															</svg>
+															<span
+																class="hidden @xl:block whitespace-nowrap overflow-hidden text-ellipsis leading-none pr-0.5"
+																>{$i18n.t('VectorDB Search')}</span
+															>
+														</button>
 													</Tooltip>
 												{/if}
 
-												
 												<!-- AXL:김정민 코드 인터프리터 미사용{#if showCodeInterpreterButton}
 													<Tooltip content={$i18n.t('Execute code for analysis')} placement="top">
 														<button
