@@ -1396,36 +1396,33 @@
 												<FileContext />
 
 												<!-- AXL:김정민: VectorDB 검색 추가 20250727 -->
-												<!-- Model이 AXLR-CODE일때만-->
-												{#if selectedModelIds.includes('AXLR-Code')}
-													<Tooltip content={$i18n.t('VectorDB Search')} placement="top">
-														<button
-															on:click|preventDefault={() =>
-																(vectorDBSearchEnabled = !vectorDBSearchEnabled)}
-															type="button"
-															class="px-2 @xl:px-2.5 py-2 flex gap-1.5 items-center text-sm rounded-full transition-colors duration-300 focus:outline-hidden max-w-full overflow-hidden hover:bg-gray-50 dark:hover:bg-gray-800 {vectorDBSearchEnabled
-																? ' text-sky-500 dark:text-sky-300 bg-sky-50 dark:bg-sky-200/5'
-																: 'bg-transparent text-gray-600 dark:text-gray-300 '}"
+												<Tooltip content={$i18n.t('VectorDB Search')} placement="top">
+													<button
+														on:click|preventDefault={() =>
+															(vectorDBSearchEnabled = !vectorDBSearchEnabled)}
+														type="button"
+														class="px-2 @xl:px-2.5 py-2 flex gap-1.5 items-center text-sm rounded-full transition-colors duration-300 focus:outline-hidden max-w-full overflow-hidden hover:bg-gray-50 dark:hover:bg-gray-800 {vectorDBSearchEnabled
+															? ' text-sky-500 dark:text-sky-300 bg-sky-50 dark:bg-sky-200/5'
+															: 'bg-transparent text-gray-600 dark:text-gray-300 '}"
+													>
+														<svg
+															xmlns="http://www.w3.org/2000/svg"
+															class="size-4"
+															fill="none"
+															viewBox="0 0 24 24"
+															stroke="currentColor"
+															stroke-width="1.75"
 														>
-															<svg
-																xmlns="http://www.w3.org/2000/svg"
-																class="size-4"
-																fill="none"
-																viewBox="0 0 24 24"
-																stroke="currentColor"
-																stroke-width="1.75"
-															>
-																<ellipse cx="12" cy="6" rx="8" ry="3" />
-																<path d="M4 6v6c0 1.657 3.582 3 8 3s8-1.343 8-3V6" />
-																<path d="M4 12v6c0 1.657 3.582 3 8 3s8-1.343 8-3v-6" />
-															</svg>
-															<span
-																class="hidden @xl:block whitespace-nowrap overflow-hidden text-ellipsis leading-none pr-0.5"
-																>{$i18n.t('VectorDB Search')}</span
-															>
-														</button>
-													</Tooltip>
-												{/if}
+															<ellipse cx="12" cy="6" rx="8" ry="3" />
+															<path d="M4 6v6c0 1.657 3.582 3 8 3s8-1.343 8-3V6" />
+															<path d="M4 12v6c0 1.657 3.582 3 8 3s8-1.343 8-3v-6" />
+														</svg>
+														<span
+															class="hidden @xl:block whitespace-nowrap overflow-hidden text-ellipsis leading-none pr-0.5"
+															>{$i18n.t('VectorDB Search')}</span
+														>
+													</button>
+												</Tooltip>
 
 												<!-- AXL:김정민 코드 인터프리터 미사용{#if showCodeInterpreterButton}
 													<Tooltip content={$i18n.t('Execute code for analysis')} placement="top">
