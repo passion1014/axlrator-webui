@@ -2,6 +2,7 @@
 	import { DropdownMenu } from 'bits-ui';
 	import { marked } from 'marked';
 	import Fuse from 'fuse.js';
+	import { page } from '$app/stores';
 
 	import dayjs from '$lib/dayjs';
 	import relativeTime from 'dayjs/plugin/relativeTime';
@@ -628,7 +629,7 @@
 				{/each}
 			</div>
 
-			{#if showTemporaryChatControl}
+			{#if showTemporaryChatControl && !$page.url.pathname.startsWith('/codeassist')}
 				<div class="flex items-center mx-2 mt-1 mb-2">
 					<button
 						class="flex justify-between w-full font-medium line-clamp-1 select-none items-center rounded-button py-2 px-3 text-sm text-gray-700 dark:text-gray-100 outline-hidden transition-all duration-75 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg cursor-pointer data-highlighted:bg-muted"
@@ -652,7 +653,6 @@
 					>
 						<div class="flex gap-2.5 items-center">
 							<ChatBubbleOval className="size-4" strokeWidth="2.5" />
-
 							{$i18n.t(`Temporary Chat`)}
 						</div>
 
