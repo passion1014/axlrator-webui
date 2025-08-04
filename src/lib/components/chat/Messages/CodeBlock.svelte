@@ -510,7 +510,7 @@
 						on:click={copyCode}>{copied ? $i18n.t('Copied') : $i18n.t('Copy')}</button
 					>
 
-					{#if !$page.url.pathname.startsWith('/d/')}
+					{#if !$page.url.pathname.startsWith('/codeassist')}
 						<button
 							class="copy-code-button bg-none border-none bg-gray-50 hover:bg-gray-100 dark:bg-gray-850 dark:hover:bg-gray-800 transition rounded-md px-1.5 py-0.5"
 							on:click={copyCodeToPlugin}

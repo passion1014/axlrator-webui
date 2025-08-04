@@ -35,8 +35,8 @@ services:
     extra_hosts:
       - host.docker.internal:host-gateway
     restart: unless-stopped
-    # command: tail -f /dev/null
-    command: ['/bin/bash', '/app/axlrator-webui/axlrator_start.sh']
+    command: tail -f /dev/null
+    # command: ['/bin/bash', '/app/axlrator-webui/axlrator_start.sh']
 
 volumes:
   # ollama: {}
