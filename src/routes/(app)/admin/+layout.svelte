@@ -58,7 +58,6 @@
 							href="/admin">{$i18n.t('Users')}</a
 						>
 
-						<!-- AXL:김정민 평가 탭 히든 처리 20250715 -->
 						<a
 							class="min-w-fit rounded-full p-1.5 {$page.url.pathname.includes('/admin/evaluations')
 								? ''
