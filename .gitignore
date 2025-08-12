@@ -311,3 +311,4 @@ frontend/nohup.out
 static/pyodide/pyodide-lock.json
 .vscode/launch.json
 backend/requirements_20250728.txt
+extracted_files
